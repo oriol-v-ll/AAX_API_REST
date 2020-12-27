@@ -15,40 +15,38 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/users")
-public class UserService {
+@Path("/KPI")
+public class KPIService {
 
-   UserDao userDao = new UserDao();
+  
+   KPIDao kpiDao = new KPIDao();
    
-   Logger log = Logger.getLogger(UserService.class.getName());
+   Logger log = Logger.getLogger(KPIService.class.getName());
 
+   
    @GET
-   @Path("/xml")
+   @Path("/kpis")
    @Produces(MediaType.APPLICATION_XML)
-   public List<User> getUsers() {	   
-	   return userDao.getAllUsers();
-   }	
-
+   public List<KPI> getKpis() {	   
+	   return kpiDao.getAllKpis();
+   }
+   
    @GET
-   @Path("/json")
-   @Produces(MediaType.APPLICATION_JSON)
-   public List<User> getUsersJson() {
-	   return userDao.getAllUsers();
-   }	
+   @Path("/pairs")
+   @Produces(MediaType.APPLICATION_XML)
+   public List<KPI> getKpis2() {	   
+	   return kpiDao.getAllKpis();
+   }
 
-   @GET
-   @Path("/user/{id}/json")
-   @Produces(MediaType.APPLICATION_JSON)
-   public User getUser(@PathParam("id") Integer id) {
-	   return userDao.getUser(id);
-   }	
+  /* 
+  	
   
    @POST
    @Path("/")
    @Consumes("application/x-www-form-urlencoded")
    public Response addUser(@FormParam("name") String name, @FormParam("profession") String profession) {
 	   try {
-		   userDao.addUser(name, profession);
+		   kpiDao.addUser(name, profession);
 		   log.log(Level.INFO, "Inserted user "+name);
       
 		   return Response.status(200)
@@ -58,13 +56,13 @@ public class UserService {
     	  return Response.status(400).build();
       }
    }
-   
+   */
    @DELETE
    @Path("/")
    @Consumes("application/x-www-form-urlencoded")
    public Response removeUser(@FormParam("id") Integer id) {
       try {
-    	  boolean deletedOk = userDao.deleteUser(id);
+    	  boolean deletedOk = kpiDao.deleteUser(id);
       
     	  if(deletedOk == true) 
     		  log.log(Level.INFO, "deleted user "+id+" correctly ");
