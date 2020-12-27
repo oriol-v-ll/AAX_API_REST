@@ -23,12 +23,23 @@ public class EntityManagerListener implements ServletContextListener{
         entityManager = Persistence.createEntityManagerFactory("InMemH2DB");
 
         DatabaseService d = new DatabaseService();
-        User user = new User("Louise Pearce", "Journalist");
-        User user2 = new User("Anton Grace", "Doctor");
-        User user3 = new User("Maria Obama", "Teacher");
-        d.insert(user);
-        d.insert(user2);
-        d.insert(user3);
+        KPI kpi = new KPI ("Product Sales");
+        KPI kpi1 = new KPI ("Product Expenses");
+        KPI kpi2 = new KPI ("Product Expenses Budget");
+        KPI kpi3 = new KPI ("Product Sales Target");
+        KPI kpi4 = new KPI ("Return on Equity");
+        KPI kpi5 = new KPI ("Return on Investment");
+        KPI kpi6 = new KPI ("Return on Assets");
+
+        d.insert(kpi);
+        d.insert(kpi1);
+        d.insert(kpi2);
+        d.insert(kpi3);
+        d.insert(kpi4);
+        d.insert(kpi5);
+        d.insert(kpi6);
+        
+ 
         
         log.log(Level.INFO, "Initialized database correctly!");
     }

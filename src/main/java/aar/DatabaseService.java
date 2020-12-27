@@ -39,6 +39,24 @@ public class DatabaseService {
         }
         return user.getId();
     }
+    
+    public int insert(KPI kpi) {
+        EntityManager entityManager = EntityManagerListener.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(kpi);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+           
+            
+        }
+        return kpi.getId();
+    }
 
     public User read(int id) {
         EntityManager entityManager = EntityManagerListener.createEntityManager();
@@ -82,12 +100,12 @@ public class DatabaseService {
         return result;
     }
 
-    public List<User> search(String key, String value) {
+    public List<KPI> search(String key, String value) {
 	    EntityManager entityManager = EntityManagerListener.createEntityManager();
         try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-            Root<User> root = criteriaQuery.from(User.class);
+            CriteriaQuery<KPI> criteriaQuery = criteriaBuilder.createQuery(KPI.class);
+            Root<KPI> root = criteriaQuery.from(KPI.class);
             criteriaQuery.select(root);
             Predicate where = criteriaBuilder.equal(root.get(key), value);
             criteriaQuery.where(where);
@@ -98,15 +116,15 @@ public class DatabaseService {
         }
     }
 
-    public List<User> findAll() {
+    public List<KPI> findAll() {
         EntityManager entityManager = EntityManagerListener.createEntityManager();
         try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            CriteriaQuery<KPI> criteriaQuery = criteriaBuilder.createQuery(KPI.class);
  
-            Root<User> rootEntry = criteriaQuery.from(User.class);
-            CriteriaQuery<User> all = criteriaQuery.select(rootEntry);
-            TypedQuery<User> allQuery = entityManager.createQuery(all);
+            Root<KPI> rootEntry = criteriaQuery.from(KPI.class);
+            CriteriaQuery<KPI> all = criteriaQuery.select(rootEntry);
+            TypedQuery<KPI> allQuery = entityManager.createQuery(all);
             return allQuery.getResultList();
         } finally {
             entityManager.close();
