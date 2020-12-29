@@ -4,26 +4,26 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class KPIDao {
+public class PairsKpisDAO {
 	
-	Logger log = Logger.getLogger(KPIDao.class.getName());
+	Logger log = Logger.getLogger(PairsKpisDAO.class.getName());
 
     final DatabaseService d = new DatabaseService();
 	
 
-    public int addKpi(String name) {
+    public int addPair(String name, String name2) {
         try {
-            KPI kpi = new KPI(name);
-            d.insert(kpi);
+            PairsKpis pair = new  PairsKpis(name, name2);
+            d.insertPair(pair);
         } catch (Exception ex) {	
            log.log(Level.SEVERE, null, ex);
         }		
         return 1;
     }
 	
-    public List<KPI> getAllKpis() {
+    public List<PairsKpis> getAllPairs() {
     	try {
-    		return d.findAll();
+    		return d.findAllPairs();
     	} catch (Exception ex) {
             log.log(Level.SEVERE, null, ex);
     	}
@@ -31,10 +31,10 @@ public class KPIDao {
     }
    
 
-    public KPI getkpi(Integer id) {
+    public KPI getPair(Integer id) {
         return d.read(id);
     }
-    public boolean deleteUser(Integer id) {
+    public boolean deletePair(Integer id) {
     	return d.delete(id);
     }
 

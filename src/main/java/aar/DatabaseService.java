@@ -22,23 +22,6 @@ public class DatabaseService {
     Logger log = Logger.getLogger(DatabaseService.class.getName());
 
 
-    public int insert(User user) {
-        EntityManager entityManager = EntityManagerListener.createEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.flush();
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
-        } finally {
-            entityManager.close();
-           
-            
-        }
-        return user.getId();
-    }
     
     public int insert(KPI kpi) {
         EntityManager entityManager = EntityManagerListener.createEntityManager();
@@ -57,12 +40,30 @@ public class DatabaseService {
         }
         return kpi.getId();
     }
-
-    public User read(int id) {
+    
+    public int insertPair(PairsKpis pair) {
         EntityManager entityManager = EntityManagerListener.createEntityManager();
-        User product = null;
         try {
-            product = entityManager.find(User.class, id);
+            entityManager.getTransaction().begin();
+            entityManager.persist(pair);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+           
+            
+        }
+        return pair.getId();
+    }
+
+    public KPI read(int id) {
+        EntityManager entityManager = EntityManagerListener.createEntityManager();
+        KPI product = null;
+        try {
+            product = entityManager.find(KPI.class, id);
         } finally {
             entityManager.close();
            
@@ -72,14 +73,15 @@ public class DatabaseService {
         return product;
     }
 
+
     public boolean delete(int id) {
 	    EntityManager entityManager = EntityManagerListener.createEntityManager();
         boolean result = false;
         try {
             entityManager.getTransaction().begin();
-            User entity = null;
+            KPI entity = null;
            
-            entity = entityManager.find(User.class, id);
+            entity = entityManager.find(KPI.class, id);
             if (entity != null) {
                 entityManager.remove(entity);
                 entityManager.getTransaction().commit();
@@ -125,6 +127,22 @@ public class DatabaseService {
             Root<KPI> rootEntry = criteriaQuery.from(KPI.class);
             CriteriaQuery<KPI> all = criteriaQuery.select(rootEntry);
             TypedQuery<KPI> allQuery = entityManager.createQuery(all);
+            return allQuery.getResultList();
+        } finally {
+            entityManager.close();
+           
+        }
+    }
+    
+    public List<PairsKpis> findAllPairs() {
+        EntityManager entityManager = EntityManagerListener.createEntityManager();
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<PairsKpis> criteriaQuery = criteriaBuilder.createQuery(PairsKpis.class);
+ 
+            Root<PairsKpis> rootEntry = criteriaQuery.from(PairsKpis.class);
+            CriteriaQuery<PairsKpis> all = criteriaQuery.select(rootEntry);
+            TypedQuery<PairsKpis> allQuery = entityManager.createQuery(all);
             return allQuery.getResultList();
         } finally {
             entityManager.close();

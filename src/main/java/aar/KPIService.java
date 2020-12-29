@@ -20,6 +20,7 @@ public class KPIService {
 
   
    KPIDao kpiDao = new KPIDao();
+   PairsKpisDAO PairsDao = new PairsKpisDAO();
    
    Logger log = Logger.getLogger(KPIService.class.getName());
 
@@ -34,8 +35,8 @@ public class KPIService {
    @GET
    @Path("/pairs")
    @Produces(MediaType.APPLICATION_XML)
-   public List<KPI> getKpis2() {	   
-	   return kpiDao.getAllKpis();
+   public List<PairsKpis> getPairs() {	   
+	   return PairsDao.getAllPairs();
    }
 
   /* 
