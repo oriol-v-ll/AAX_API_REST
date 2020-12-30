@@ -34,7 +34,7 @@ public class KPIDao {
     public KPI getkpi(Integer id) {
         return d.read(id);
     }
-    public boolean deleteUser(Integer id) {
+    public boolean deleteKpi(Integer id) {
     	return d.delete(id);
     }
 

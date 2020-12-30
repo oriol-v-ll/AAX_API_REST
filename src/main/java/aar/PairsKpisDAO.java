@@ -34,7 +34,7 @@ public class PairsKpisDAO {
     public KPI getPair(Integer id) {
         return d.read(id);
     }
-    public boolean deletePair(Integer id) {
+    public boolean deletePair(Integer id, Integer id2) {
     	return d.delete(id);
     }
 
