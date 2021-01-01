@@ -42,8 +42,8 @@ public class KPIService {
    @GET
    @Path("/pairs/current/{id1}/{id2}")
    @Produces(MediaType.APPLICATION_JSON)
-   public PairsKpis getPair(@PathParam("id1") Integer id1,@PathParam("id2") Integer id2) {	   
-	   return PairsDao.getPair(id1,id2);
+   public PairsKpis getPair(@PathParam("id1") Integer id1,@PathParam("id2") Integer id2) {	 
+	   return PairsDao.getPair(id1, id2);
    }
    
    @GET

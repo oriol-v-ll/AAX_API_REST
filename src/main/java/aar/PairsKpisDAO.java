@@ -41,13 +41,11 @@ public class PairsKpisDAO {
     }
    
 
-    public KPI getPair(Integer id) {
-        return d.read(id);
+    public PairsKpis getPair(Integer id1, Integer id2) {
+        return d.readPair(id1,id2);
     }
     
-    public PairsKpis getPair(Integer id1, Integer id2) {
-    	return d.readPair(id1, id2);
-    }
+
     
     public boolean deletePair(Integer id1, Integer id2) {
     	int id = id1+ id2;
