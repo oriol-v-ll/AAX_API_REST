@@ -49,7 +49,7 @@ public class PairsKpisDAO {
     
     public boolean deletePair(Integer id1, Integer id2) {
     	int id = id1+ id2;
-    	return d.delete(id);
+    	return d.deletePair(id);
     }
 
 }

@@ -116,6 +116,34 @@ public class DatabaseService {
         }
         return result;
     }
+    
+    public boolean deletePair (int id) {
+	    EntityManager entityManager = EntityManagerListener.createEntityManager();
+        boolean result = false;
+        try {
+            entityManager.getTransaction().begin();
+            PairsKpis entity = null;
+           
+            entity = entityManager.find(PairsKpis.class, id);
+            if (entity != null) {
+                entityManager.remove(entity);
+                entityManager.getTransaction().commit();
+                result = true;
+            } else {
+                log.warning("No records records were found with given id value !!");
+                result = false;
+            }
+            
+        } catch (Exception e) {
+            result = false;
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+          
+        }
+        return result;
+    }
 
     public List<KPI> search(String key, String value) {
 	    EntityManager entityManager = EntityManagerListener.createEntityManager();
