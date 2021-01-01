@@ -72,6 +72,21 @@ public class DatabaseService {
         }
         return product;
     }
+    
+    public PairsKpis readPair(int id1,int id2) {
+        EntityManager entityManager = EntityManagerListener.createEntityManager();
+        PairsKpis product = null;
+        try {
+        	int id = id1+id2;
+            product = entityManager.find(PairsKpis.class, id);
+            
+        } finally {
+            entityManager.close();
+           
+            if (product == null) log.warning("No records records were found with given id value");
+        }
+        return product;
+    }
 
 
     public boolean delete(int id) {
@@ -137,13 +152,16 @@ public class DatabaseService {
     public List<PairsKpis> findAllPairs() {
         EntityManager entityManager = EntityManagerListener.createEntityManager();
         try {
+        	
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<PairsKpis> criteriaQuery = criteriaBuilder.createQuery(PairsKpis.class);
- 
+            	
             Root<PairsKpis> rootEntry = criteriaQuery.from(PairsKpis.class);
             CriteriaQuery<PairsKpis> all = criteriaQuery.select(rootEntry);
+            
             TypedQuery<PairsKpis> allQuery = entityManager.createQuery(all);
             return allQuery.getResultList();
+            
         } finally {
             entityManager.close();
            

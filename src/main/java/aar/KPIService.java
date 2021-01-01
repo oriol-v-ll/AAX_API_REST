@@ -40,16 +40,16 @@ public class KPIService {
    }
    
    @GET
-   @Path("/pairs/current")
+   @Path("/pairs/current/{id1}/{id2}")
    @Produces(MediaType.APPLICATION_JSON)
-   public List<KPI> getKpis2() {	   
-	   return kpiDao.getAllKpis();
+   public PairsKpis getPair(@PathParam("id1") Integer id1,@PathParam("id2") Integer id2) {	   
+	   return PairsDao.getPair(id1,id2);
    }
    
    @GET
-   @Path("/pairs/max")
+   @Path("/pairs/max/{id1}/{id2}")
    @Produces(MediaType.APPLICATION_JSON)
-   public List<KPI> getKpis3() {	   
+   public List<KPI> getMaxKPI() {	   
 	   return kpiDao.getAllKpis();
    }
    
@@ -72,10 +72,10 @@ public class KPIService {
    @POST
    @Path("/pairs")
    @Consumes("application/x-www-form-urlencoded")
-   public Response addPair(@FormParam("KPI1") String name, @FormParam("KPI2") String name2) {
+   public Response addPair(@FormParam("KPI1") String name, @FormParam("KPI2") String name2,@FormParam("id1") Integer id1,@FormParam("id2") Integer id2) {
 	   try {
-		   PairsDao.addPair(name, name2);
-		   log.log(Level.INFO, "Inserted user "+name);
+		   PairsDao.addPair(name, name2, id1, id2);
+		   log.log(Level.INFO, "Inserted pairs "+ name + ", name2: " + name2);
       
 		   return Response.status(200)
 				   .entity("addPair -> name: " + name + ", name2: " + name2)
@@ -86,9 +86,9 @@ public class KPIService {
    }
 
    @DELETE
-   @Path("/kpis")
+   @Path("/kpis/{id}")
    @Consumes("application/x-www-form-urlencoded")
-   public Response removeKpi(@FormParam("id") Integer id) {
+   public Response removeKpi(@PathParam("id") Integer id) {
       try {
     	  boolean deletedOk = kpiDao.deleteKpi(id);
       
@@ -104,17 +104,17 @@ public class KPIService {
    }
    
    @DELETE
-   @Path("/pairs")
+   @Path("/pairs/{id1}/{id2}")
    @Consumes("application/x-www-form-urlencoded")
-   public Response removeUser(@FormParam("id") Integer id,@FormParam("id2") Integer id2 ) {
+   public Response removeUser(@PathParam("id1") Integer id1,@PathParam("id2") Integer id2 ) {
       try {
-    	  boolean deletedOk = PairsDao.deletePair(id, id2);
+    	  boolean deletedOk = PairsDao.deletePair(id1, id2);
       
     	  if(deletedOk == true) 
-    		  log.log(Level.INFO, "deleted pair "+id+"/"+id2+" correctly ");
+    		  log.log(Level.INFO, "deleted pair "+id1+"/"+id2+" correctly ");
       
     	  return Response.status(200)
-    			  .entity("deleted pair "+id+"/"+id2+" correctly ")
+    			  .entity("deleted pair "+id1+"/"+id2+" correctly ")
     			  .build();
       } catch(Exception e) {
     	  return Response.status(400).build();

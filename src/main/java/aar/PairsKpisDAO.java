@@ -11,10 +11,20 @@ public class PairsKpisDAO {
     final DatabaseService d = new DatabaseService();
 	
 
-    public int addPair(String name, String name2) {
+    public int addPair(String name, String name2, Integer id1, Integer id2) {
         try {
-            PairsKpis pair = new  PairsKpis(name, name2);
-            d.insertPair(pair);
+            PairsKpis pair = new  PairsKpis(name, name2, id1, id2);
+            //Se comprueba que no este en la base de datos antes de añadirla.
+            if (pair.equals(d.readPair(id1, id2))){
+            	if (pair.equals(d.readPair(id2, id1))) {
+            		return 0;
+            	}else {
+            		d.insertPair(pair);
+            	}
+            }else {
+            	d.insertPair(pair);
+            }
+            
         } catch (Exception ex) {	
            log.log(Level.SEVERE, null, ex);
         }		
@@ -34,7 +44,13 @@ public class PairsKpisDAO {
     public KPI getPair(Integer id) {
         return d.read(id);
     }
-    public boolean deletePair(Integer id, Integer id2) {
+    
+    public PairsKpis getPair(Integer id1, Integer id2) {
+    	return d.readPair(id1, id2);
+    }
+    
+    public boolean deletePair(Integer id1, Integer id2) {
+    	int id = id1+ id2;
     	return d.delete(id);
     }
 

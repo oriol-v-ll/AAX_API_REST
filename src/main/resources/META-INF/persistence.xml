@@ -7,7 +7,7 @@
 
 	<persistence-unit name="InMemH2DB" transaction-type="RESOURCE_LOCAL">
 
-		<class>aar.User</class>
+		<class>aar.KPI</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:example" />
