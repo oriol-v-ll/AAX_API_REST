@@ -48,8 +48,8 @@ public class KPIService {
    @GET
    @Path("/pairs/max/{id1}/{id2}")
    @Produces(MediaType.APPLICATION_JSON)
-   public List<KPI> getMaxKPI() {	   
-	   return kpiDao.getAllKpis();
+   public PairsKpis getMaxKPI(@PathParam("id1") Integer id1,@PathParam("id2") Integer id2) {	   
+	   return PairsDao.getPair(id1, id2);
    }
    
    @POST
@@ -64,7 +64,9 @@ public class KPIService {
 				   .entity("addKpi -> name: " + name )
 				   .build();
       } catch(Exception e) {
-    	  return Response.status(400).build();
+    	  return Response.status(400)
+    			  .entity("Kpi not inserted correctly")
+    			  .build();
       }
    }
 

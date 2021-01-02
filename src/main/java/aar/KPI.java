@@ -13,38 +13,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class KPI implements Serializable {
-   
-   private static final long serialVersionUID = 1L;
-   
-   @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-   private int id;
 
-   @Column(nullable = false)
-   private String name;
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int id;
 
-   public KPI() {}
-   
-   public KPI(String name) {
-      this.name = name;
-      
-   }
+	@Column(nullable = false)
+	private String name;
 
-   public int getId() {
-      return id;
-   }
+	public KPI() {
+	}
 
-   @XmlElement
-   public void setId(int id) {
-      this.id = id;
-   }
-   public String getName() {
-      return name;
-   }
-   @XmlElement
-   public void setName(String name) {
-      this.name = name;
-   }
-		
+	public KPI(String name) {
+		this.name = name;
+
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	@XmlElement
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@XmlElement
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

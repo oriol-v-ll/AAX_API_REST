@@ -6,6 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.Id;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,6 +38,14 @@ public class PairsKpis implements Serializable {
 	@Column(nullable = false)
 	private int comparation;
 
+	@Column(nullable = false)
+	static private int max;
+
+	static {
+		max = 0;
+
+	}
+
 	public PairsKpis() {
 	}
 
@@ -41,9 +55,29 @@ public class PairsKpis implements Serializable {
 		this.id = id1 + id2;
 		this.id1 = id1;
 		this.id2 = id2;
+		generateComparation();
 
-		// Genaramos el primer valor para la comparación
-		comparation = 123456789;
+	}
+
+	/**
+	 * Función que genera un valor aleatorio desde la API proporcionada
+	 * 
+	 */
+	public void generateComparation() {
+
+		Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://www.randomnumberapi.com/api/v1.0/random?min=10&max=99&count=1");
+
+		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+
+		String response = invocationBuilder.get(String.class);
+		String comparationString = response.substring(1, 3);
+		int comparationFinal = Integer.parseInt(comparationString);
+		this.comparation = comparationFinal;
+
+		if (comparationFinal > max) {
+			setMax(comparationFinal);
+		}
 
 	}
 
@@ -51,9 +85,17 @@ public class PairsKpis implements Serializable {
 		return id;
 	}
 
+	static public void setMax(int newMax) {
+		max = newMax;
+	}
+
 	@XmlElement
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	static public int getMax() {
+		return max;
 	}
 
 	public String getName1() {

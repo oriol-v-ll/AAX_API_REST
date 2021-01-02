@@ -78,8 +78,7 @@ public class DatabaseService {
         PairsKpis product = null;
         try {
         	int id = id1+id2;
-            product = entityManager.find(PairsKpis.class, id);
-            
+            product = entityManager.find(PairsKpis.class, id); 
         } finally {
             entityManager.close();
            
